@@ -79,7 +79,13 @@ class SbufferData(implicit p: Parameters) extends XSModule with HasSbufferConst 
   })
 
   val data = Reg(Vec(StoreBufferSize, Vec(CacheLineWords, Vec(DataBytes, UInt(8.W)))))
-
+  //////////////////////////////////////////////////////////////////
+  for(i <- 0 until StoreBufferSize) {
+    for (j <- 0 until CacheLineWords){
+      printf("Store Buffer Entry [%d][%d]: 0x%x\n", i.asUInt, j.asUInt, data(i)(j).asUInt);
+    }
+  }
+  /////////////////////////////////////////////////////////////// 
   val req = io.writeReq
 
   for(i <- 0 until StorePipelineWidth) {

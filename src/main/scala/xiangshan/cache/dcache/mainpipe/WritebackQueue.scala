@@ -444,6 +444,10 @@ class WritebackQueue(edge: TLEdgeOut)(implicit p: Parameters) extends DCacheModu
   assert(RegNext(!(io.mem_grant.valid && !io.mem_grant.ready)))
   io.mem_grant.ready := true.B
 
+  for (i <- 0 until cfg.nReleaseEntries) {
+    printf("WriteBackBufferEntries [%d]: BlockAddress:%x Data:%x Valid:%d\n", i.asUInt, entries(i).io.block_addr.bits, entries(i).io.req.bits.data , entries(i).io.req.valid.asUInt);
+  }
+
   val miss_req_conflict = VecInit(entries.map(e => e.io.block_addr.valid && e.io.block_addr.bits === io.miss_req.bits)).asUInt.orR
   io.block_miss_req := io.miss_req.valid && miss_req_conflict
 

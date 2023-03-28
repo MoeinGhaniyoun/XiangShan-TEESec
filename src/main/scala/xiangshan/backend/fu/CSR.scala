@@ -601,6 +601,10 @@ class CSR(implicit p: Parameters) extends FunctionUnit with HasCSRConst with PMP
 
   // Hart Priviledge Mode
   val priviledgeMode = RegInit(UInt(2.W), ModeM)
+  ///////////////////////////////////////
+  printf("CurrentPrivilegeMode: %d\n", priviledgeMode.asUInt);
+  ///////////////////////////////////////
+
 
   //val perfEventscounten = List.fill(nrPerfCnts)(RegInit(false(Bool())))
   // Perf Counter

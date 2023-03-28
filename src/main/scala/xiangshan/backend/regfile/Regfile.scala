@@ -53,6 +53,10 @@ class Regfile
   println("Regfile: size:" + NRPhyRegs + " read: " + numReadPorts + " write: " + numWritePorts)
 
   val mem = Reg(Vec(NRPhyRegs, UInt(len.W)))
+  for (i <- 0 until NRPhyRegs) {
+      printf ("Register Number %d = %x \n", i.U, mem(i))
+  }
+
   for (r <- io.readPorts) {
     val rdata = if (hasZero) Mux(r.addr === 0.U, 0.U, mem(r.addr)) else mem(r.addr)
     r.data := RegNext(rdata)

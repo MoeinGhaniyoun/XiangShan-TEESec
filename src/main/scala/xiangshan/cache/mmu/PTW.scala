@@ -270,6 +270,12 @@ class PTWImp(outer: PTW)(implicit p: Parameters) extends PtwModule(outer) with H
     waiting_resp(mem.d.bits.source) := false.B
     flush_latch(mem.d.bits.source) := false.B
   }
+  ////////////////////////////////
+  printf("PTWCacheInfo: ReqValid: %d, ReqVPN: %x, RefilValid: %d RefillPTEs: %x, CacheHit: %d\n", cache.io.req.valid, cache.io.req.bits.vpn, cache.io.refill.valid, cache.io.refill.bits.ptes, cache.io.resp.bits.hit);
+
+  printf("mem_resp_done: %d, flush: %d, flush_latch(mem.d.bits.source): %d, mem.d.bits.source: %x, mem.d.valid: %d\n", mem_resp_done, sfence.valid, sfence_latch(mem.d.bits.source), mem.d.bits.source, mem.d.valid);
+  printf("memRead.fromSource: %x, toAddress: %x, toAddress(notAligned): %x, mem.a.valid: %x, mem_arb.io.out.valid: %x\n", mem_arb.io.out.bits.id, blockBytes_align(mem_arb.io.out.bits.addr), mem_arb.io.out.bits.addr, mem.a.valid, mem_arb.io.out.valid);
+  ///////////////////////////////
 
   def block_decoupled[T <: Data](source: DecoupledIO[T], sink: DecoupledIO[T], block_signal: Bool) = {
     sink.valid   := source.valid && !block_signal
